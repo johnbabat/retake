@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# local media, database and outputs
+data/
+*.sqlite
+*.sqlite-journal
+*.db
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# logs
+*.log
