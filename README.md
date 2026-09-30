@@ -29,9 +29,10 @@ Retake is only used on the author's own face and footage, or on AI-generated fic
 
 ## Running it locally
 
-Requirements: macOS, Node.js (LTS), pnpm, FFmpeg.
+Requirements: macOS, Node.js 24 (see `.nvmrc`), pnpm, FFmpeg.
 
 ```bash
+nvm use
 brew install ffmpeg
 corepack enable
 pnpm install
