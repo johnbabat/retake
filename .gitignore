@@ -27,3 +27,10 @@ data/
 
 # logs
 *.log
+
+# next.js / tooling
+next-env.d.ts
+.vercel
+*.pem
+build/
+.pnpm-debug.log*
