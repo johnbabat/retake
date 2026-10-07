@@ -7,3 +7,4 @@ minimumReleaseAge: 4320
 allowBuilds:
   sharp: false
   unrs-resolver: false
+  esbuild: false

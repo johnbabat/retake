@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.4",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -21,12 +24,14 @@
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.0.5"
   },
-  "packageManager": "pnpm@12.14.0"
+  "packageManager": "pnpm@12.14.0",
+  "type": "module"
 }
