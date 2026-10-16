@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "pnpm db:migrate && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts"
+    "db:migrate": "node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts",
+    "worker": "pnpm db:migrate && node --env-file-if-exists=.env.local --import tsx scripts/worker.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.4",

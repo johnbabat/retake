@@ -25,6 +25,45 @@ export function run(bin: "ffmpeg" | "ffprobe", args: string[]): Promise<string> 
   });
 }
 
+export type ProbeResult = {
+  durationMs: number | null;
+  width: number | null;
+  height: number | null;
+  fps: number | null;
+  hasAudio: boolean;
+};
+
+/** Read basic metadata from a media file with ffprobe. */
+export async function probe(path: string): Promise<ProbeResult> {
+  const out = await run("ffprobe", [
+    "-v", "error",
+    "-print_format", "json",
+    "-show_format",
+    "-show_streams",
+    path,
+  ]);
+  const info = JSON.parse(out) as {
+    format?: { duration?: string };
+    streams?: { codec_type?: string; width?: number; height?: number; avg_frame_rate?: string }[];
+  };
+  const video = info.streams?.find((s) => s.codec_type === "video");
+  const duration = Number(info.format?.duration);
+  return {
+    durationMs: Number.isFinite(duration) ? Math.round(duration * 1000) : null,
+    width: video?.width ?? null,
+    height: video?.height ?? null,
+    fps: parseRate(video?.avg_frame_rate),
+    hasAudio: Boolean(info.streams?.some((s) => s.codec_type === "audio")),
+  };
+}
+
+function parseRate(rate: string | undefined): number | null {
+  if (!rate) return null;
+  const [num, den] = rate.split("/").map(Number);
+  if (!num || !den) return null;
+  return Math.round((num / den) * 1000) / 1000;
+}
+
 /** Render a short H.264 test-pattern clip, used by the mock provider. */
 export async function renderTestPattern(
   outPath: string,
