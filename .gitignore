@@ -34,3 +34,6 @@ next-env.d.ts
 *.pem
 build/
 .pnpm-debug.log*
+
+# local tool config
+.claude/
