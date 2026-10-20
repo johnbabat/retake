@@ -4,7 +4,7 @@ Retake is an AI-assisted video editor. You upload a video, it splits into shots,
 
 It is a personal project, built for my own footage. It runs locally on a Mac and calls third-party AI video APIs. It does not train or host any models.
 
-> **Status:** early development. See [ROADMAP.md](ROADMAP.md) for what is planned.
+> **Status:** early development. The job runner works end to end in mock mode (M0). See [ROADMAP.md](ROADMAP.md) for what is next.
 
 ## What it does (planned)
 
@@ -42,6 +42,16 @@ pnpm worker                  # background job runner (separate terminal)
 ```
 
 Set `PROVIDERS=mock` in `.env.local` to try the app without any API keys or spend.
+
+Other scripts: `pnpm test` (unit tests), `pnpm typecheck`, `pnpm lint`, `pnpm db:generate` (after changing the schema).
+
+## How it fits together
+
+- **Web app** (`src/app`): the editor UI and API routes. It only reads and writes database rows.
+- **Worker** (`scripts/worker.ts`, `src/server/jobs`): picks up queued jobs, checks the spend caps, calls providers, saves the results as takes.
+- **Providers** (`src/server/providers`): one adapter per AI model behind a single interface, plus a free mock.
+- **Media** (`src/server/media`): FFmpeg and ffprobe, always called with argument lists (never a shell).
+- **Database** (`src/server/db`): SQLite through Node's built-in `node:sqlite`, so there are no native modules to compile.
 
 ## License
 

@@ -2,10 +2,10 @@
 
 Retake is built in milestones. Each one ends with a demo that has to work before the next one starts.
 
-## M0 · Foundations
-- [ ] Next.js app, SQLite + Drizzle, folder layout, lint, Vitest
-- [ ] Provider adapter interface and a mock provider (no paid calls)
-- [ ] Background worker with a job queue, cost ledger, and daily/monthly spend caps
+## M0 · Foundations ✅
+- [x] Next.js app, SQLite + Drizzle, folder layout, lint, Vitest
+- [x] Provider adapter interface and a mock provider (no paid calls)
+- [x] Background worker with a job queue, cost ledger, and daily/monthly spend caps
 
 **Done when:** the web app and worker run, a mock job goes from queued to done in the UI, and spend reads $0.00.
 
