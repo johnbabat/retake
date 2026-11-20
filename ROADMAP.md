@@ -2,6 +2,17 @@
 
 Retake is built in milestones. Each one ends with a demo that has to work before the next one starts.
 
+## Local / Offline Editor Track (Mock Mode)
+
+Before wiring live external providers, the core non-linear video editor, multi-track timeline, and local FFmpeg compositor are built and verified end to end in `PROVIDERS=mock` mode using synthetic FFmpeg-generated multi-scene footage (`M2`, `M3`, `M6`, and `M8`). Live AI API calls, personal footage, and voice/character models (`M1`, `M4`, `M7`) are out of scope for this track.
+
+- **Media ingest & shot detection (`M2`):** synthetic multi-scene clip generator, streaming upload, `ffprobe` metadata (VFR and rotation handling), 720p proxy, FFmpeg scene-score shot detection, thumbnails, and visual PCM waveform peaks
+- **Shot & take edit loop (`M3`):** project editor page, manual shot split/merge, side-by-side mock takes per shot, select take or revert to original, undo/redo history
+- **Multi-track timeline & compositor (`M6`):** video, audio, and keyframed text/shape overlay tracks; trim, split, slip, ripple, reorder, transitions, keyboard shortcuts, HTML5 Canvas preview, and segment-cached FFmpeg export to **WebM (VP9)** and **MP4**
+- **Hardening & verification (`M8`):** spend/job breakdown view, parallel/cached segment rendering, golden-frame parity checks between Canvas preview and FFmpeg WebM output, `ffprobe`/PCM sync checks, and Playwright end-to-end tests in mock mode
+
+**Done when:** a generated multi-scene clip ingests into shots with waveforms, supports multi-track edits (splits, trims, reorders, text overlays, and mock take replacements) with full undo/redo, exports to a playable WebM/MP4 with zero frame-count drift verified by `ffprobe`, matches Canvas preview frames within SSIM/pixel-diff bounds, and passes the Vitest + Playwright suite offline.
+
 ## M0 · Foundations ✅
 - [x] Next.js app, SQLite + Drizzle, folder layout, lint, Vitest
 - [x] Provider adapter interface and a mock provider (no paid calls)

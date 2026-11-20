@@ -4,7 +4,7 @@ Retake is an AI-assisted video editor. You upload a video, it splits into shots,
 
 It is a personal project, built for my own footage. It runs locally on a Mac and calls third-party AI video APIs. It does not train or host any models.
 
-> **Status:** early development. The job runner works end to end in mock mode (M0). See [ROADMAP.md](ROADMAP.md) for what is next.
+> **Status:** early development. The job runner works end to end in mock mode (M0). The non-linear video editor, multi-track timeline, and local FFmpeg pipeline can be built and verified completely offline in mock mode using generated test footage — see [Local / Offline Editor Track in ROADMAP.md](ROADMAP.md#local--offline-editor-track-mock-mode).
 
 ## What it does (planned)
 
@@ -29,19 +29,23 @@ Retake is only used on the author's own face and footage, or on AI-generated fic
 
 ## Running it locally
 
-Requirements: macOS, Node.js 24 (see `.nvmrc`), pnpm, FFmpeg.
+Requirements: macOS or Linux, Node.js 22.13+ (24 in `.nvmrc`), pnpm (or npm), FFmpeg.
 
 ```bash
-nvm use
-brew install ffmpeg
+nvm use                      # Node 22.13+ works (built-in node:sqlite)
+brew install ffmpeg          # macOS; on Linux use the system ffmpeg
 corepack enable
 pnpm install
-cp .env.example .env.local   # then add your own API keys
+cp .env.example .env.local   # optional: PROVIDERS=mock is already the default
 pnpm dev                     # web app on http://localhost:3000
 pnpm worker                  # background job runner (separate terminal)
 ```
 
-Set `PROVIDERS=mock` in `.env.local` to try the app without any API keys or spend.
+Set `PROVIDERS=mock` (the default when `.env.local` is omitted) to run completely offline with synthetic FFmpeg clips, no API keys, and `$0.00` spend.
+
+**Offline / mirror environments:**
+- If `corepack` cannot download `pnpm@12.14.0` without public internet, install pnpm from your local npm mirror (`npm i -g pnpm`) or adjust `"packageManager"` in `package.json` to match the installed pnpm version (standard `npm install` also works).
+- `pnpm-workspace.yaml` sets `minimumReleaseAge: 4320` as a supply-chain guard; if an internal package mirror omits publish timestamps, comment that line out locally.
 
 Other scripts: `pnpm test` (unit tests), `pnpm typecheck`, `pnpm lint`, `pnpm db:generate` (after changing the schema).
 

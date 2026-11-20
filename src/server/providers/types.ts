@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-/** What the app can ask a provider to do. Program scope: no face swap of other people. */
+/** What the app can ask a provider to do. Never used to depict other real people. */
 export const capabilities = [
   "generate",
   "replace-character",

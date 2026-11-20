@@ -57,7 +57,7 @@ export const shots = sqliteTable("shots", {
 
 /**
  * People or characters that can be inserted into shots.
- * While in the CC-CLI program only "self" and "fictional" are allowed.
+ * Only the author ("self") or fictional characters ("fictional") are allowed; never other real people.
  */
 export const identities = sqliteTable("identities", {
   id: id(),
